@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import RankingTable from '../components/RankingTable'
+import AdBanner from '../components/AdBanner'
 
 const TABS = [
   { id: '', label: '전체' },
@@ -69,6 +70,13 @@ export default function RankingPage() {
           총 {data.length}개 견적
         </p>
       )}
+
+      {/* Ad — 랭킹 하단 */}
+      <AdBanner
+        slot="0987654321"
+        format="auto"
+        style={{ marginTop: 20 }}
+      />
     </div>
   )
 }

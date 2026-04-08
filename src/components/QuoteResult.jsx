@@ -1,3 +1,5 @@
+import AdBanner from './AdBanner'
+
 function formatPrice(n) {
   return '₩' + Number(n).toLocaleString('ko-KR')
 }
@@ -158,6 +160,13 @@ export default function QuoteResult({ result, onReset, onViewRanking }) {
           🏆 랭킹 보기
         </button>
       </div>
+
+      {/* Ad — 결과 하단 */}
+      <AdBanner
+        slot="1234567890"
+        format="auto"
+        style={{ margin: '4px 0' }}
+      />
     </div>
   )
 }
