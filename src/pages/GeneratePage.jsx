@@ -97,8 +97,11 @@ export default function GeneratePage({ onViewRanking }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || `서버 오류 (${res.status})`)
+      }
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || '서버 오류')
       setResult(data)
       setStep(2)
     } catch (e) {
@@ -121,9 +124,9 @@ export default function GeneratePage({ onViewRanking }) {
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: 6 }}>✨ AI 견적 생성기</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>
-            <span style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>🖼 Gemma 4 26B</span>
+            <span style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>🖼 GPT-4o Vision</span>
             &nbsp;이미지 인식 &nbsp;+&nbsp;
-            <span style={{ background: '#FFF7ED', color: '#C2410C', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>📝 Nemotron 120B</span>
+            <span style={{ background: '#FFF7ED', color: '#C2410C', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>📝 GPT-4o</span>
             &nbsp;견적 생성
           </p>
         </div>
@@ -158,7 +161,7 @@ export default function GeneratePage({ onViewRanking }) {
                   <h3 style={{ fontWeight: 700, marginBottom: 6 }}>프로젝트 이미지 업로드</h3>
                   <p style={{ fontSize: '.875rem', color: 'var(--text-muted)' }}>
                     기획서·요구사항 문서·화이트보드 사진을 업로드하면<br />
-                    <strong>Gemma 4 26B</strong>가 자동으로 프로젝트 정보를 추출합니다.
+                    <strong>GPT-4o Vision</strong>이 자동으로 프로젝트 정보를 추출합니다.
                   </p>
                 </div>
                 <ImageUploader onExtracted={handleImageExtracted} loading={loading} />

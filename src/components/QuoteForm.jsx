@@ -128,7 +128,7 @@ export default function QuoteForm({ category, onSubmit, loading, prefilled = {} 
 
       <button type="submit" className="btn btn-primary btn-lg btn-full" disabled={loading}>
         {loading ? (
-          <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 3 }} /> Nemotron 120B 견적 생성 중...</>
+          <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 3 }} /> GPT-4o 견적 생성 중...</>
         ) : (
           <>✨ AI 견적 생성하기</>
         )}

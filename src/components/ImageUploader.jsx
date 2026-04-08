@@ -37,8 +37,11 @@ export default function ImageUploader({ onExtracted, loading }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: base64 }),
       })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || `분석 실패 (${res.status})`)
+      }
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || '분석 실패')
       onExtracted(data)
     } catch (e) {
       setError(e.message)
@@ -86,7 +89,7 @@ export default function ImageUploader({ onExtracted, loading }) {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <div className="spinner" />
             <div style={{ fontWeight: 600, color: 'var(--primary)' }}>
-              🔍 Gemma 4 26B가 이미지를 분석하고 있습니다...
+              🔍 GPT-4o Vision이 이미지를 분석하고 있습니다...
             </div>
             <div style={{ fontSize: '.8rem', color: 'var(--text-muted)' }}>프로젝트 정보를 자동으로 추출합니다</div>
           </div>
