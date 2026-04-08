@@ -2,8 +2,8 @@ import { useState } from 'react'
 import PrivacyModal from './PrivacyModal'
 import TermsModal from './TermsModal'
 
-export default function Footer() {
-  const [modal, setModal] = useState(null) // 'privacy' | 'terms' | null
+export default function Footer({ onNav }) {
+  const [modal, setModal] = useState(null) // 'privacy' | 'terms' | 'ai' | null
 
   return (
     <>
@@ -37,28 +37,26 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* 링크 */}
+            {/* 서비스 링크 */}
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '.88rem', color: '#CBD5E1', marginBottom: 10 }}>서비스</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {onNav && <>
+                  <button onClick={() => onNav('generate')} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>AI 견적 생성</button>
+                  <button onClick={() => onNav('guide')}    style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>견적 가이드</button>
+                  <button onClick={() => onNav('ranking')}  style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>견적 랭킹</button>
+                  <button onClick={() => onNav('about')}    style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>회사 소개</button>
+                </>}
+              </div>
+            </div>
+
+            {/* 정책 링크 */}
             <div>
               <div style={{ fontWeight: 700, fontSize: '.88rem', color: '#CBD5E1', marginBottom: 10 }}>정책 및 약관</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <button
-                  onClick={() => setModal('privacy')}
-                  style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}
-                >
-                  개인정보 처리방침
-                </button>
-                <button
-                  onClick={() => setModal('terms')}
-                  style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}
-                >
-                  서비스 이용약관
-                </button>
-                <button
-                  onClick={() => setModal('ai')}
-                  style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}
-                >
-                  AI 서비스 고지
-                </button>
+                <button onClick={() => setModal('privacy')} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>개인정보 처리방침</button>
+                <button onClick={() => setModal('terms')}   style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>서비스 이용약관</button>
+                <button onClick={() => setModal('ai')}      style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '.82rem', textAlign: 'left', padding: 0 }}>AI 서비스 고지</button>
               </div>
             </div>
           </div>
