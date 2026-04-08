@@ -49,7 +49,7 @@ export default function TermsModal({ onClose }) {
       <p>서비스 이용과 관련한 분쟁은 대한민국 법률에 따르며, 관할 법원은 회사 소재지 관할 법원으로 합니다.</p>
 
       <p style={{ marginTop: 16, color: '#64748B', fontSize: '.78rem' }}>
-        문의: 경기도 부천시 은성로32 비1층(소사본동) · 032-351-9117 · help@kznetwork.co.kr
+        문의: 경기도 부천시 은성로32 비1층(소사본동) · 032-351-9117 · kz4network@gmail.com
       </p>
     </Modal>
   )

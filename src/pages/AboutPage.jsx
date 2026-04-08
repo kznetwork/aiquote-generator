@@ -17,7 +17,7 @@ export default function AboutPage() {
             { label: '대표이사', value: '대표이사' },
             { label: '소재지', value: '경기도 부천시 은성로32 비1층(소사본동)' },
             { label: '대표전화', value: '032-351-9117' },
-            { label: '이메일', value: 'help@kznetwork.co.kr' },
+            { label: '이메일', value: 'kz4network@gmail.com' },
             { label: '서비스', value: 'AI 견적 생성, IT 솔루션' },
           ].map(({ label, value }) => (
             <div key={label} style={{ padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
@@ -81,7 +81,7 @@ export default function AboutPage() {
         <p style={{ fontSize: '.85rem', color: 'var(--text-muted)', lineHeight: 1.8 }}>
           본 서비스는 「인공지능 기본법」(법률 제20692호)에 따라 AI 생성 콘텐츠임을 명시하고 있습니다.
           모든 견적 결과는 AI가 자동 생성한 것으로 참고용이며, 최종 계약의 법적 효력을 갖지 않습니다.
-          AI 생성 결과에 대한 이의제기 및 문의는 help@kznetwork.co.kr로 연락해 주세요.
+          AI 생성 결과에 대한 이의제기 및 문의는 kz4network@gmail.com로 연락해 주세요.
         </p>
       </div>
     </div>

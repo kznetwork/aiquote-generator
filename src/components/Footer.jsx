@@ -24,7 +24,7 @@ export default function Footer({ onNav }) {
               </div>
               <div>경기도 부천시 은성로32 비1층(소사본동)</div>
               <div>대표전화: 032-351-9117</div>
-              <div>이메일: help@kznetwork.co.kr</div>
+              <div>이메일: kz4network@gmail.com</div>
             </div>
 
             {/* AI 서비스 안내 */}
@@ -50,6 +50,16 @@ export default function Footer({ onNav }) {
               </div>
             </div>
 
+            {/* Our Sites */}
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '.88rem', color: '#CBD5E1', marginBottom: 10 }}>Our Sites</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <a href="http://kznetwork.co.kr/" target="_blank" rel="noopener noreferrer" style={{ color: '#94A3B8', fontSize: '.82rem', textDecoration: 'none' }}>kznetwork.co.kr</a>
+                <a href="https://koai.ai/" target="_blank" rel="noopener noreferrer" style={{ color: '#94A3B8', fontSize: '.82rem', textDecoration: 'none' }}>koai.ai</a>
+                <a href="https://brandgrowth.store/" target="_blank" rel="noopener noreferrer" style={{ color: '#94A3B8', fontSize: '.82rem', textDecoration: 'none' }}>brandgrowth.store</a>
+              </div>
+            </div>
+
             {/* 정책 링크 */}
             <div>
               <div style={{ fontWeight: 700, fontSize: '.88rem', color: '#CBD5E1', marginBottom: 10 }}>정책 및 약관</div>
@@ -62,7 +72,7 @@ export default function Footer({ onNav }) {
           </div>
 
           <div style={{ borderTop: '1px solid #334155', paddingTop: 20, display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>© {new Date().getFullYear()} 주식회사 케이지네트워크. All rights reserved.</span>
+            <span>© 2023 주식회사 케이지네트워크. All rights reserved.</span>
             <span style={{ fontSize: '.75rem', color: '#475569' }}>
               Powered by GPT-4o · AI 생성 결과는 참고용입니다
             </span>
@@ -101,7 +111,7 @@ function AINoticeModal({ onClose }) {
       <p>AI 생성 결과를 이용한 의사결정에 대한 최종 책임은 이용자에게 있으며, 중요한 계약 체결 전에는 반드시 전문가와 상담하시기 바랍니다.</p>
 
       <h4>4. 이의제기 및 문의</h4>
-      <p>AI 생성 결과에 이의가 있거나 오류가 의심되는 경우 help@kznetwork.co.kr로 문의하시기 바랍니다.</p>
+      <p>AI 생성 결과에 이의가 있거나 오류가 의심되는 경우 kz4network@gmail.com으로 문의하시기 바랍니다.</p>
     </Modal>
   )
 }

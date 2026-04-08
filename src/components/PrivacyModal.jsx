@@ -37,12 +37,12 @@ export default function PrivacyModal({ open, onClose }) {
         <li>개인정보 처리 정지 요청</li>
         <li>자동화된 결정에 대한 설명 요구 및 이의제기</li>
       </ul>
-      <p>행사 방법: help@kznetwork.co.kr / 032-351-9117</p>
+      <p>행사 방법: kz4network@gmail.com / 032-351-9117</p>
 
       <h4>제5조 (개인정보 보호책임자)</h4>
       <ul>
         <li>책임자: 대표이사</li>
-        <li>연락처: 032-351-9117 / help@kznetwork.co.kr</li>
+        <li>연락처: 032-351-9117 / kz4network@gmail.com</li>
         <li>소재지: 경기도 부천시 은성로32 비1층(소사본동)</li>
       </ul>
 
