@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { extractProjectFromImage, generateQuoteAndFeedback } from './openrouter.js';
 import { saveQuote, getRanking, calculateRanks } from './storage.js';
 
-if (!process.env.OPENROUTER_API_KEY) {
-  console.error('❌ OPENROUTER_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요.');
+if (!process.env.OPENAI_API_KEY) {
+  console.error('❌ OPENAI_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요.');
   process.exit(1);
 }
 
@@ -95,6 +95,6 @@ app.get('/api/ranking', (req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ API 서버 실행 중: http://localhost:${PORT}`);
-  console.log(`   🖼  이미지 모델: google/gemma-4-26b-a4b-it:free`);
-  console.log(`   📝 텍스트 모델: nvidia/nemotron-3-super-120b-a12b:free`);
+  console.log(`   🖼  이미지 모델: gpt-4o (Vision)`);
+  console.log(`   📝 텍스트 모델: gpt-4o`);
 });
