@@ -1,19 +1,20 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import CategorySelector from '../components/CategorySelector'
 import QuoteForm from '../components/QuoteForm'
 import QuoteResult from '../components/QuoteResult'
 import ImageUploader from '../components/ImageUploader'
 
-const STEPS = ['카테고리 선택', '정보 입력', '결과 확인']
-
-const CAT_NAMES = {
-  'Interior Architecture': '인테리어',
-  'IT': 'IT 개발',
-  'Consulting': '컨설팅',
-  'Translation': '번역',
+const CAT_KEYS = {
+  'Interior Architecture': 'Interior Architecture',
+  'IT': 'IT',
+  'Consulting': 'Consulting',
+  'Translation': 'Translation',
 }
 
 function StepBar({ step }) {
+  const { t } = useTranslation()
+  const STEPS = t('generate.steps', { returnObjects: true })
   return (
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: 28 }}>
       {STEPS.map((label, i) => {
@@ -22,8 +23,7 @@ function StepBar({ step }) {
           <div key={i} style={{ display: 'flex', alignItems: 'center', flex: i < STEPS.length - 1 ? 1 : 'none' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{
-                width: 32, height: 32, borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontWeight: 700, fontSize: '.85rem', transition: 'all .2s',
                 background: done ? 'var(--success)' : active ? 'var(--primary)' : 'var(--border)',
                 color: done || active ? 'white' : 'var(--text-muted)',
@@ -44,19 +44,14 @@ function StepBar({ step }) {
   )
 }
 
-// 탭 공통 스타일
 function Tab({ active, onClick, icon, label, sub }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={{
-        flex: 1, padding: '14px 16px', border: 'none', cursor: 'pointer',
-        borderBottom: `3px solid ${active ? 'var(--primary)' : 'transparent'}`,
-        background: active ? 'var(--primary-light)' : 'white',
-        transition: 'all .15s', textAlign: 'center',
-      }}
-    >
+    <button type="button" onClick={onClick} style={{
+      flex: 1, padding: '14px 16px', border: 'none', cursor: 'pointer',
+      borderBottom: `3px solid ${active ? 'var(--primary)' : 'transparent'}`,
+      background: active ? 'var(--primary-light)' : 'white',
+      transition: 'all .15s', textAlign: 'center',
+    }}>
       <div style={{ fontSize: '1.3rem', marginBottom: 2 }}>{icon}</div>
       <div style={{ fontWeight: 700, fontSize: '.9rem', color: active ? 'var(--primary)' : 'var(--text-muted)' }}>{label}</div>
       <div style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginTop: 2 }}>{sub}</div>
@@ -65,37 +60,33 @@ function Tab({ active, onClick, icon, label, sub }) {
 }
 
 export default function GeneratePage({ onViewRanking }) {
-  const [step,     setStep]     = useState(0)
-  const [mode,     setMode]     = useState('manual')   // 'manual' | 'image'
-  const [category, setCategory] = useState('')
-  const [prefilled, setPrefilled] = useState({})
-  const [loading,  setLoading]  = useState(false)
-  const [error,    setError]    = useState('')
-  const [result,   setResult]   = useState(null)
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language?.startsWith('en') ? 'en' : 'ko'
 
-  // ── 이미지 추출 완료 콜백 ────────────────────────────────────────────────
+  const [step,      setStep]     = useState(0)
+  const [mode,      setMode]     = useState('manual')
+  const [category,  setCategory] = useState('')
+  const [prefilled, setPrefilled] = useState({})
+  const [loading,   setLoading]  = useState(false)
+  const [error,     setError]    = useState('')
+  const [result,    setResult]   = useState(null)
+
   const handleImageExtracted = (data) => {
     setError('')
-    // 카테고리 자동 설정
     if (data.category) setCategory(data.category)
     setPrefilled(data)
-    setStep(1)   // 폼 단계로 이동
+    setStep(1)
   }
 
-  // ── 모드 전환 ────────────────────────────────────────────────────────────
-  const switchMode = (m) => {
-    setMode(m); setCategory(''); setPrefilled({}); setError('')
-    setStep(0)
-  }
+  const switchMode = (m) => { setMode(m); setCategory(''); setPrefilled({}); setError(''); setStep(0) }
 
-  // ── 견적 생성 ────────────────────────────────────────────────────────────
   const handleSubmit = async (formData) => {
     setLoading(true); setError('')
     try {
       const res = await fetch('/api/generate-quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, lang }),
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
@@ -111,57 +102,47 @@ export default function GeneratePage({ onViewRanking }) {
     }
   }
 
-  const handleReset = () => {
-    setStep(0); setCategory(''); setPrefilled({})
-    setResult(null); setError(''); setMode('manual')
-  }
+  const handleReset = () => { setStep(0); setCategory(''); setPrefilled({}); setResult(null); setError(''); setMode('manual') }
 
-  // ─────────────────────────────────────────────────────────────────────────
   return (
     <div>
-      {/* Hero */}
       {step < 2 && (
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: 6 }}>✨ AI 견적 생성기</h1>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: 6 }}>{t('generate.title')}</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>
             <span style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>🖼 GPT-4o Vision</span>
-            &nbsp;이미지 인식 &nbsp;+&nbsp;
+            &nbsp;{t('generate.subtitle')}&nbsp;{t('generate.subtitleAnd')}&nbsp;
             <span style={{ background: '#FFF7ED', color: '#C2410C', borderRadius: 4, padding: '1px 6px', fontSize: '.8rem', fontWeight: 600 }}>📝 GPT-4o</span>
-            &nbsp;견적 생성
+            &nbsp;{t('generate.subtitleGen')}
           </p>
         </div>
       )}
 
       {step < 2 && <StepBar step={step} />}
 
-      {/* ── Step 0 ── */}
       {step === 0 && (
         <div className="card" style={{ overflow: 'hidden' }}>
-          {/* 탭 */}
           <div style={{ display: 'flex', borderBottom: '1px solid var(--border)' }}>
-            <Tab active={mode === 'manual'} onClick={() => switchMode('manual')}
-              icon="⌨️" label="직접 입력" sub="카테고리 선택 후 입력" />
-            <Tab active={mode === 'image'} onClick={() => switchMode('image')}
-              icon="🖼️" label="이미지로 입력" sub="문서·기획서 이미지 업로드" />
+            <Tab active={mode === 'manual'} onClick={() => switchMode('manual')} icon="⌨️" label={t('generate.tabManual')} sub={t('generate.tabManualSub')} />
+            <Tab active={mode === 'image'}  onClick={() => switchMode('image')}  icon="🖼️" label={t('generate.tabImage')}  sub={t('generate.tabImageSub')} />
           </div>
-
           <div className="card-pad">
             {mode === 'manual' ? (
               <>
                 <CategorySelector selected={category} onSelect={setCategory} />
                 <div style={{ marginTop: 20, display: 'flex', justifyContent: 'flex-end' }}>
                   <button className="btn btn-primary btn-lg" disabled={!category} onClick={() => setStep(1)}>
-                    다음 단계 →
+                    {t('generate.next')}
                   </button>
                 </div>
               </>
             ) : (
               <>
                 <div style={{ marginBottom: 16 }}>
-                  <h3 style={{ fontWeight: 700, marginBottom: 6 }}>프로젝트 이미지 업로드</h3>
+                  <h3 style={{ fontWeight: 700, marginBottom: 6 }}>{t('generate.imageUploadTitle')}</h3>
                   <p style={{ fontSize: '.875rem', color: 'var(--text-muted)' }}>
-                    기획서·요구사항 문서·화이트보드 사진을 업로드하면<br />
-                    <strong>GPT-4o Vision</strong>이 자동으로 프로젝트 정보를 추출합니다.
+                    {t('generate.imageUploadDesc')}<br />
+                    <strong>GPT-4o Vision</strong> {t('generate.imageUploadDesc2')}
                   </p>
                 </div>
                 <ImageUploader onExtracted={handleImageExtracted} loading={loading} />
@@ -171,34 +152,25 @@ export default function GeneratePage({ onViewRanking }) {
         </div>
       )}
 
-      {/* ── Step 1 ── */}
       {step === 1 && (
         <div className="card card-pad">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
             <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '.85rem' }} onClick={() => setStep(0)}>
-              ← 뒤로
+              {t('generate.back')}
             </button>
             <div>
-              <h2 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 2 }}>프로젝트 정보 입력</h2>
+              <h2 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 2 }}>{t('generate.formTitle')}</h2>
               <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                {category && <span className="badge badge-blue">📂 {CAT_NAMES[category] || category}</span>}
-                {mode === 'image' && <span className="badge badge-green">🖼 이미지 자동 추출</span>}
+                {category && <span className="badge badge-blue">📂 {t(`category.${CAT_KEYS[category]}.label`, { defaultValue: category })}</span>}
+                {mode === 'image' && <span className="badge badge-green">{t('generate.imageAutoTag')}</span>}
               </div>
             </div>
           </div>
-
-          {error && <div className="error-box" style={{ marginBottom: 16 }}>⚠️ {error}</div>}
-
-          <QuoteForm
-            category={category}
-            onSubmit={handleSubmit}
-            loading={loading}
-            prefilled={prefilled}
-          />
+          {error && <div className="error-box" style={{ marginBottom: 16 }}>{t('generate.error')} {error}</div>}
+          <QuoteForm category={category} onSubmit={handleSubmit} loading={loading} prefilled={prefilled} />
         </div>
       )}
 
-      {/* ── Step 2 ── */}
       {step === 2 && result && (
         <QuoteResult result={result} onReset={handleReset} onViewRanking={onViewRanking} />
       )}

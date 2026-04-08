@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const ACCEPT = 'image/jpeg,image/png,image/webp,image/gif'
 const MAX_MB  = 5
@@ -13,23 +14,23 @@ function toBase64(file) {
 }
 
 export default function ImageUploader({ onExtracted, loading }) {
-  const [dragging, setDragging]   = useState(false)
-  const [preview,  setPreview]    = useState(null)
-  const [fileName, setFileName]   = useState('')
-  const [error,    setError]      = useState('')
+  const { t } = useTranslation()
+  const [dragging, setDragging]     = useState(false)
+  const [preview,  setPreview]      = useState(null)
+  const [fileName, setFileName]     = useState('')
+  const [error,    setError]        = useState('')
   const [extracting, setExtracting] = useState(false)
   const inputRef = useRef()
 
   const processFile = useCallback(async (file) => {
     setError('')
-    if (!file.type.startsWith('image/')) { setError('이미지 파일만 업로드할 수 있습니다.'); return }
-    if (file.size > MAX_MB * 1024 * 1024)  { setError(`파일 크기는 ${MAX_MB}MB 이하여야 합니다.`); return }
+    if (!file.type.startsWith('image/')) { setError(t('image.errorType')); return }
+    if (file.size > MAX_MB * 1024 * 1024) { setError(t('image.errorSize')); return }
 
     const base64 = await toBase64(file)
     setPreview(base64)
     setFileName(file.name)
 
-    // 자동으로 서버에 전송해 프로젝트 정보 추출
     setExtracting(true)
     try {
       const res  = await fetch('/api/extract-image', {
@@ -48,26 +49,16 @@ export default function ImageUploader({ onExtracted, loading }) {
     } finally {
       setExtracting(false)
     }
-  }, [onExtracted])
+  }, [onExtracted, t])
 
-  const onDrop = useCallback((e) => {
-    e.preventDefault(); setDragging(false)
-    const file = e.dataTransfer.files[0]
-    if (file) processFile(file)
-  }, [processFile])
-
-  const onPaste = useCallback((e) => {
-    const item = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith('image/'))
-    if (item) processFile(item.getAsFile())
-  }, [processFile])
-
+  const onDrop      = useCallback((e) => { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) processFile(f) }, [processFile])
+  const onPaste     = useCallback((e) => { const item = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith('image/')); if (item) processFile(item.getAsFile()) }, [processFile])
   const onFileChange = (e) => { if (e.target.files[0]) processFile(e.target.files[0]) }
 
   const isDisabled = loading || extracting
 
   return (
     <div onPaste={onPaste}>
-      {/* Drop zone */}
       <div
         onClick={() => !isDisabled && inputRef.current.click()}
         onDragOver={e => { e.preventDefault(); setDragging(true) }}
@@ -78,66 +69,45 @@ export default function ImageUploader({ onExtracted, loading }) {
           borderRadius: 'var(--radius)',
           background: dragging ? 'var(--primary-light)' : preview ? '#F0FDF4' : 'var(--bg)',
           padding: preview ? '12px' : '40px 20px',
-          textAlign: 'center',
-          cursor: isDisabled ? 'not-allowed' : 'pointer',
-          transition: 'all .2s',
-          opacity: isDisabled ? .7 : 1,
+          textAlign: 'center', cursor: isDisabled ? 'not-allowed' : 'pointer',
+          transition: 'all .2s', opacity: isDisabled ? .7 : 1,
         }}
       >
         {extracting ? (
-          /* 추출 중 */
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <div className="spinner" />
-            <div style={{ fontWeight: 600, color: 'var(--primary)' }}>
-              🔍 GPT-4o Vision이 이미지를 분석하고 있습니다...
-            </div>
-            <div style={{ fontSize: '.8rem', color: 'var(--text-muted)' }}>프로젝트 정보를 자동으로 추출합니다</div>
+            <div style={{ fontWeight: 600, color: 'var(--primary)' }}>{t('image.analyzing')}</div>
+            <div style={{ fontSize: '.8rem', color: 'var(--text-muted)' }}>{t('image.analyzingDesc')}</div>
           </div>
         ) : preview ? (
-          /* 미리보기 */
           <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
             <img src={preview} alt="preview" style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }} />
             <div style={{ textAlign: 'left', flex: 1 }}>
-              <div style={{ fontWeight: 600, fontSize: '.9rem', color: 'var(--success)' }}>✅ 분석 완료</div>
+              <div style={{ fontWeight: 600, fontSize: '.9rem', color: 'var(--success)' }}>{t('image.done')}</div>
               <div style={{ fontSize: '.8rem', color: 'var(--text-muted)', marginTop: 2 }}>{fileName}</div>
-              <button
-                type="button"
+              <button type="button"
                 onClick={e => { e.stopPropagation(); setPreview(null); setFileName(''); setError('') }}
-                style={{ marginTop: 6, fontSize: '.78rem', color: 'var(--danger)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-              >
-                × 이미지 제거
+                style={{ marginTop: 6, fontSize: '.78rem', color: 'var(--danger)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                {t('image.remove')}
               </button>
             </div>
           </div>
         ) : (
-          /* 기본 상태 */
           <>
             <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>🖼️</div>
-            <div style={{ fontWeight: 600, marginBottom: 4 }}>이미지를 드래그하거나 클릭해서 업로드</div>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>{t('image.dropzone')}</div>
             <div style={{ fontSize: '.82rem', color: 'var(--text-muted)', marginBottom: 12 }}>
-              JPG · PNG · WebP · GIF / 최대 {MAX_MB}MB<br />
-              클립보드에서 <kbd style={{ background: 'var(--border)', padding: '1px 5px', borderRadius: 4, fontSize: '.78rem' }}>Ctrl+V</kbd> 붙여넣기도 가능
+              {t('image.formats')}<br />
+              {t('image.paste')}
             </div>
-            <span style={{ fontSize: '.82rem', color: 'var(--primary)', fontWeight: 600 }}>
-              📋 프로젝트 문서·화이트보드·기획서 이미지를 올리면 자동으로 정보를 추출합니다
-            </span>
+            <span style={{ fontSize: '.82rem', color: 'var(--primary)', fontWeight: 600 }}>{t('image.hint')}</span>
           </>
         )}
       </div>
 
-      <input
-        ref={inputRef}
-        type="file"
-        accept={ACCEPT}
-        style={{ display: 'none' }}
-        onChange={onFileChange}
-      />
+      <input ref={inputRef} type="file" accept={ACCEPT} style={{ display: 'none' }} onChange={onFileChange} />
 
-      {error && (
-        <div className="error-box" style={{ marginTop: 10, fontSize: '.85rem' }}>
-          ⚠️ {error}
-        </div>
-      )}
+      {error && <div className="error-box" style={{ marginTop: 10, fontSize: '.85rem' }}>⚠️ {error}</div>}
     </div>
   )
 }

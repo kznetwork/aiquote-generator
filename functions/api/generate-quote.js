@@ -24,7 +24,8 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
-    const { category, project_description, scope, timeline, requirements, budget } = await request.json();
+    const { category, project_description, scope, timeline, requirements, budget, lang } = await request.json();
+    const isEn = lang === 'en';
 
     if (!category || !project_description || !scope || !timeline || !requirements) {
       return Response.json({ error: '필수 입력값이 부족합니다.' }, { status: 400, headers: corsHeaders });
@@ -49,7 +50,7 @@ Timeline: ${timeline}
 Requirements: ${requirements}
 ${budget ? `Budget reference: ${budget}` : ''}
 
-Respond with ONLY this JSON (all numbers are integers, prices in KRW ₩, text in Korean):
+Respond with ONLY this JSON (all numbers are integers, prices in KRW ₩, text in ${isEn ? 'English' : 'Korean'}):
 {
   "quote": {
     "category": "${category}",

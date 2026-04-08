@@ -1,0 +1,180 @@
+{
+  "nav": {
+    "logo": "AI 견적 생성기",
+    "generate": "견적 생성",
+    "guide": "견적 가이드",
+    "ranking": "랭킹",
+    "about": "회사 소개"
+  },
+  "generate": {
+    "title": "✨ AI 견적 생성기",
+    "subtitle": "이미지 인식",
+    "subtitleAnd": "+",
+    "subtitleGen": "견적 생성",
+    "steps": ["카테고리 선택", "정보 입력", "결과 확인"],
+    "tabManual": "직접 입력",
+    "tabManualSub": "카테고리 선택 후 입력",
+    "tabImage": "이미지로 입력",
+    "tabImageSub": "문서·기획서 이미지 업로드",
+    "next": "다음 단계 →",
+    "back": "← 뒤로",
+    "formTitle": "프로젝트 정보 입력",
+    "imageAutoTag": "🖼 이미지 자동 추출",
+    "imageUploadTitle": "프로젝트 이미지 업로드",
+    "imageUploadDesc": "기획서·요구사항 문서·화이트보드 사진을 업로드하면",
+    "imageUploadDesc2": "이 자동으로 프로젝트 정보를 추출합니다.",
+    "error": "⚠️"
+  },
+  "category": {
+    "title": "카테고리 선택",
+    "subtitle": "견적을 생성할 프로젝트 유형을 선택하세요",
+    "Interior Architecture": { "label": "인테리어 건축", "desc": "인테리어 설계 및 건축 프로젝트" },
+    "IT": { "label": "IT 개발", "desc": "소프트웨어 / 시스템 개발" },
+    "Consulting": { "label": "컨설팅", "desc": "경영 / 전략 컨설팅" },
+    "Translation": { "label": "번역", "desc": "번역 / 로컬라이제이션" }
+  },
+  "form": {
+    "description": "프로젝트 설명",
+    "scope": "범위 (Scope)",
+    "timeline": "일정 (Timeline)",
+    "budget": "예산 (선택)",
+    "requirements": "요구사항 (Requirements)",
+    "timelinePlaceholder": "예: 3개월, 12주",
+    "budgetPlaceholder": "예: 5,000만원 이하",
+    "submit": "✨ AI 견적 생성하기",
+    "submitting": "GPT-4o 견적 생성 중...",
+    "autoExtracted": "이미지에서 자동 추출된 정보입니다. 내용을 확인하고 필요하면 수정해주세요.",
+    "placeholders": {
+      "Interior Architecture": {
+        "description": "예: 강남구 소재 카페 인테리어 리모델링 프로젝트",
+        "scope": "예: 전체 80㎡ 공사 (바닥, 벽면, 천장, 조명, 가구)",
+        "requirements": "예: 모던 미니멀 스타일, 친환경 자재, 영업 중단 최소화"
+      },
+      "IT": {
+        "description": "예: 소상공인을 위한 예약 관리 웹 플랫폼 개발",
+        "scope": "예: 프론트엔드(React), 백엔드(Node.js), DB, 관리자 대시보드",
+        "requirements": "예: 모바일 반응형, 결제 연동, 알림 기능"
+      },
+      "Consulting": {
+        "description": "예: 스타트업 시리즈 A 투자 유치 전략 컨설팅",
+        "scope": "예: 비즈니스 모델 분석, 시장 조사, IR 자료 작성",
+        "requirements": "예: 3개월 내 투자 유치 목표, 주 1회 미팅"
+      },
+      "Translation": {
+        "description": "예: SaaS 제품 UI/UX 및 마케팅 자료 영→한 번역",
+        "scope": "예: 웹 앱 UI 텍스트 약 5,000단어, 랜딩페이지, 이메일 템플릿",
+        "requirements": "예: IT 전문 용어 일관성, 현지화 수준 번역, 용어집 제공"
+      }
+    }
+  },
+  "image": {
+    "analyzing": "🔍 GPT-4o Vision이 이미지를 분석하고 있습니다...",
+    "analyzingDesc": "프로젝트 정보를 자동으로 추출합니다",
+    "done": "✅ 분석 완료",
+    "remove": "× 이미지 제거",
+    "dropzone": "이미지를 드래그하거나 클릭해서 업로드",
+    "formats": "JPG · PNG · WebP · GIF / 최대 5MB",
+    "paste": "붙여넣기도 가능",
+    "hint": "📋 프로젝트 문서·화이트보드·기획서 이미지를 올리면 자동으로 정보를 추출합니다",
+    "errorType": "이미지 파일만 업로드할 수 있습니다.",
+    "errorSize": "파일 크기는 5MB 이하여야 합니다."
+  },
+  "result": {
+    "totalPrice": "총 견적가",
+    "rankOverall": "전체 #{{rank}}위",
+    "rankCategory": "카테고리 #{{rank}}위",
+    "detail": "📄 견적 상세",
+    "item": "항목",
+    "price": "금액",
+    "total": "합계",
+    "risks": "⚡ 리스크 요소",
+    "feedback": "📝 평가 피드백",
+    "strengths": "✅ 강점",
+    "weaknesses": "⚠️ 약점",
+    "suggestions": "💡 개선 제안",
+    "reset": "🔄 새 견적 생성",
+    "viewRanking": "🏆 랭킹 보기",
+    "scoreLabel": "/ 100",
+    "excellent": "우수",
+    "good": "좋음",
+    "fair": "보통",
+    "poor": "미흡"
+  },
+  "ranking": {
+    "title": "🏆 견적 랭킹",
+    "subtitle": "AI 견적 품질 점수 기준 정렬 (동점 시 생성 순)",
+    "refresh": "🔄 새로 고침",
+    "all": "전체",
+    "colRank": "순위",
+    "colCategory": "카테고리",
+    "colSummary": "요약",
+    "colPrice": "총 견적가",
+    "colTimeline": "일정",
+    "colScore": "점수",
+    "colDate": "날짜",
+    "loading": "랭킹 불러오는 중...",
+    "empty": "아직 저장된 견적이 없습니다.\n견적을 생성하면 랭킹에 표시됩니다.",
+    "total": "총 {{count}}개 견적"
+  },
+  "footer": {
+    "address": "경기도 부천시 은성로32 비1층(소사본동)",
+    "phone": "대표전화: 032-351-9117",
+    "email": "이메일: kz4network@gmail.com",
+    "aiNoticeTitle": "AI 서비스 안내",
+    "aiNoticeText": "본 서비스는 「인공지능 기본법」에 따라 AI가 생성한 견적임을 고지합니다. AI 생성 결과는 참고용이며, 최종 계약 금액과 다를 수 있습니다. 중요한 의사결정 시 전문가와 반드시 상담하시기 바랍니다.",
+    "service": "서비스",
+    "policy": "정책 및 약관",
+    "ourSites": "Our Sites",
+    "privacy": "개인정보 처리방침",
+    "terms": "서비스 이용약관",
+    "aiNoticeLink": "AI 서비스 고지",
+    "copyright": "© 2023 주식회사 케이지네트워크. All rights reserved.",
+    "powered": "Powered by GPT-4o · AI 생성 결과는 참고용입니다"
+  },
+  "about": {
+    "title": "🏢 회사 소개",
+    "subtitle": "주식회사 케이지네트워크는 AI 기술로 비즈니스 의사결정을 돕습니다.",
+    "overviewTitle": "📌 회사 개요",
+    "fields": {
+      "name": "회사명",
+      "nameVal": "주식회사 케이지네트워크",
+      "ceo": "대표이사",
+      "ceoVal": "대표이사",
+      "address": "소재지",
+      "addressVal": "경기도 부천시 은성로32 비1층(소사본동)",
+      "phone": "대표전화",
+      "phoneVal": "032-351-9117",
+      "email": "이메일",
+      "emailVal": "kz4network@gmail.com",
+      "service": "서비스",
+      "serviceVal": "AI 견적 생성, IT 솔루션"
+    },
+    "serviceTitle": "🤖 AI 견적 생성 서비스란?",
+    "serviceDesc1": "케이지네트워크의 AI 견적 생성 서비스는 OpenAI GPT-4o 모델을 활용하여 인테리어, IT 개발, 경영 컨설팅, 번역 프로젝트의 견적을 자동으로 생성합니다.",
+    "serviceDesc2": "기존에는 견적을 받기 위해 여러 업체에 연락하고 며칠을 기다려야 했습니다. 본 서비스는 프로젝트 정보를 입력하거나 기획서 이미지를 업로드하면 수 초 내에 한국 시장 기준의 상세 견적과 품질 피드백을 제공합니다.",
+    "features": {
+      "instant": "⚡ 즉시 생성",
+      "instantDesc": "수 초 내 견적 완성",
+      "market": "🎯 한국 시장 기준",
+      "marketDesc": "국내 실제 단가 반영",
+      "score": "📊 품질 점수",
+      "scoreDesc": "프로젝트 완성도 평가",
+      "vision": "🖼️ 이미지 인식",
+      "visionDesc": "문서 업로드로 자동 추출"
+    },
+    "categoryTitle": "📂 지원 서비스 카테고리",
+    "aiLawTitle": "📜 인공지능 기본법 준수",
+    "aiLawDesc": "본 서비스는 「인공지능 기본법」(법률 제20692호)에 따라 AI 생성 콘텐츠임을 명시하고 있습니다. 모든 견적 결과는 AI가 자동 생성한 것으로 참고용이며, 최종 계약의 법적 효력을 갖지 않습니다. AI 생성 결과에 대한 이의제기 및 문의는 kz4network@gmail.com로 연락해 주세요."
+  },
+  "guide": {
+    "title": "📚 프로젝트 견적 가이드",
+    "subtitle": "인테리어, IT 개발, 컨설팅, 번역 프로젝트의 견적 산정 기준과 절약 방법을 전문가 가이드로 알아보세요.",
+    "readMore": "자세히 보기 →",
+    "back": "← 목록으로",
+    "aiCta": "✨ AI로 정확한 견적 받기",
+    "aiCtaDesc": "위 가이드를 참고해서 프로젝트 정보를 입력하면 GPT-4o AI가 한국 시장 기준 맞춤 견적을 즉시 생성합니다. 이미지·기획서 업로드도 가능합니다.",
+    "noGuideTitle": "🤔 견적 가이드를 읽어도 모르겠다면?",
+    "noGuideDesc": "프로젝트 정보를 입력하거나 기획서 이미지를 업로드하면 GPT-4o AI가 한국 시장 기준으로 항목별 상세 견적과 품질 피드백을 즉시 제공합니다. 무료로 이용하세요.",
+    "faqTitle": "❓ 자주 묻는 질문"
+  }
+}

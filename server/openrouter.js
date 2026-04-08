@@ -64,7 +64,8 @@ export async function extractProjectFromImage(base64DataUrl) {
 
 // ─── 2. 프로젝트 정보 → 견적 + 피드백 (GPT-4o) ───────────────────────────────
 export async function generateQuoteAndFeedback(input) {
-  const { category, project_description, scope, timeline, requirements, budget } = input;
+  const { category, project_description, scope, timeline, requirements, budget, lang } = input;
+  const isEn = lang === 'en';
   const ctx = CATEGORY_CONTEXT[category] || category;
 
   const systemPrompt = `You are a professional project estimator specializing in ${ctx}.
@@ -79,7 +80,7 @@ Timeline: ${timeline}
 Requirements: ${requirements}
 ${budget ? `Budget reference: ${budget}` : ''}
 
-Respond with ONLY this JSON (all numbers are integers, prices in KRW ₩, text in Korean):
+Respond with ONLY this JSON (all numbers are integers, prices in KRW ₩, text in ${isEn ? 'English' : 'Korean'}):
 {
   "quote": {
     "category": "${category}",

@@ -1,23 +1,22 @@
+import { useTranslation } from 'react-i18next'
+
 function formatPrice(n) {
   return '₩' + Number(n).toLocaleString('ko-KR')
 }
 
 function ScoreBadge({ score }) {
-  let cls = 'badge-blue', label = '좋음'
-  if (score >= 90) { cls = 'badge-green'; label = '우수' }
-  else if (score < 70 && score >= 50) { cls = 'badge-yellow'; label = '보통' }
-  else if (score < 50) { cls = 'badge-red'; label = '미흡' }
-  return <span className={`badge ${cls}`}>{score}점 · {label}</span>
+  const { t } = useTranslation()
+  let cls = 'badge-blue', label = t('result.good')
+  if (score >= 90)                    { cls = 'badge-green';  label = t('result.excellent') }
+  else if (score < 70 && score >= 50) { cls = 'badge-yellow'; label = t('result.fair') }
+  else if (score < 50)                { cls = 'badge-red';    label = t('result.poor') }
+  return <span className={`badge ${cls}`}>{score} · {label}</span>
 }
 
 function RankChip({ rank }) {
   const cls = rank <= 3 ? `rank-chip rank-${rank}` : 'rank-chip'
   const icons = { 1: '🥇', 2: '🥈', 3: '🥉' }
-  return (
-    <div className={cls} title={`#${rank}위`}>
-      {icons[rank] || rank}
-    </div>
-  )
+  return <div className={cls} title={`#${rank}`}>{icons[rank] || rank}</div>
 }
 
 const CAT_ICONS = {
@@ -28,37 +27,32 @@ const CAT_ICONS = {
 }
 
 export default function RankingTable({ data, loading, error }) {
-  if (loading) {
-    return (
-      <div className="loading-box">
-        <div className="spinner" />
-        <span>랭킹 불러오는 중...</span>
-      </div>
-    )
-  }
-  if (error) {
-    return <div className="error-box">⚠️ {error}</div>
-  }
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language?.startsWith('en') ? 'en-US' : 'ko-KR'
+
+  if (loading) return <div className="loading-box"><div className="spinner" /><span>{t('ranking.loading')}</span></div>
+  if (error)   return <div className="error-box">⚠️ {error}</div>
   if (!data || data.length === 0) {
     return (
       <div className="loading-box" style={{ color: 'var(--text-muted)' }}>
         <span style={{ fontSize: '2.5rem' }}>📭</span>
-        <span>아직 저장된 견적이 없습니다.<br />견적을 생성하면 랭킹에 표시됩니다.</span>
+        <span style={{ whiteSpace: 'pre-line', textAlign: 'center' }}>{t('ranking.empty')}</span>
       </div>
     )
   }
+
   return (
     <div className="table-wrap">
       <table>
         <thead>
           <tr>
-            <th style={{ width: 50 }}>순위</th>
-            <th>카테고리</th>
-            <th>요약</th>
-            <th>총 견적가</th>
-            <th>일정</th>
-            <th>점수</th>
-            <th>날짜</th>
+            <th style={{ width: 50 }}>{t('ranking.colRank')}</th>
+            <th>{t('ranking.colCategory')}</th>
+            <th>{t('ranking.colSummary')}</th>
+            <th>{t('ranking.colPrice')}</th>
+            <th>{t('ranking.colTimeline')}</th>
+            <th>{t('ranking.colScore')}</th>
+            <th>{t('ranking.colDate')}</th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +61,7 @@ export default function RankingTable({ data, loading, error }) {
               <td><RankChip rank={row.rank} /></td>
               <td>
                 <span className="category-chip">
-                  {CAT_ICONS[row.category] || '📋'} {row.category === 'Interior Architecture' ? '인테리어' : row.category === 'Translation' ? '번역' : row.category === 'Consulting' ? '컨설팅' : row.category}
+                  {CAT_ICONS[row.category] || '📋'} {t(`category.${row.category}.label`, { defaultValue: row.category })}
                 </span>
               </td>
               <td style={{ maxWidth: 260 }}>
@@ -78,12 +72,10 @@ export default function RankingTable({ data, loading, error }) {
               <td style={{ fontWeight: 700, color: 'var(--primary)' }}>
                 {row.quote?.total_price ? formatPrice(row.quote.total_price) : '-'}
               </td>
-              <td style={{ color: 'var(--text-muted)', fontSize: '.875rem' }}>
-                {row.quote?.timeline || '-'}
-              </td>
+              <td style={{ color: 'var(--text-muted)', fontSize: '.875rem' }}>{row.quote?.timeline || '-'}</td>
               <td><ScoreBadge score={row.score} /></td>
               <td style={{ color: 'var(--text-muted)', fontSize: '.8rem', whiteSpace: 'nowrap' }}>
-                {new Date(row.created_at).toLocaleDateString('ko-KR')}
+                {new Date(row.created_at).toLocaleDateString(locale)}
               </td>
             </tr>
           ))}

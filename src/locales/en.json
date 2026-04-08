@@ -1,0 +1,180 @@
+{
+  "nav": {
+    "logo": "AI Quote Generator",
+    "generate": "Generate Quote",
+    "guide": "Pricing Guide",
+    "ranking": "Ranking",
+    "about": "About"
+  },
+  "generate": {
+    "title": "✨ AI Quote Generator",
+    "subtitle": "Image Recognition",
+    "subtitleAnd": "+",
+    "subtitleGen": "Quote Generation",
+    "steps": ["Select Category", "Enter Details", "View Result"],
+    "tabManual": "Manual Input",
+    "tabManualSub": "Select category and fill in details",
+    "tabImage": "Image Upload",
+    "tabImageSub": "Upload a document or whiteboard photo",
+    "next": "Next →",
+    "back": "← Back",
+    "formTitle": "Project Details",
+    "imageAutoTag": "🖼 Auto-extracted from image",
+    "imageUploadTitle": "Upload Project Image",
+    "imageUploadDesc": "Upload a planning document, requirement sheet, or whiteboard photo and",
+    "imageUploadDesc2": "will automatically extract project information.",
+    "error": "⚠️"
+  },
+  "category": {
+    "title": "Select Category",
+    "subtitle": "Choose the type of project you need a quote for",
+    "Interior Architecture": { "label": "Interior & Architecture", "desc": "Interior design & construction" },
+    "IT": { "label": "IT Development", "desc": "Software / System development" },
+    "Consulting": { "label": "Consulting", "desc": "Management / Strategy consulting" },
+    "Translation": { "label": "Translation", "desc": "Translation / Localization" }
+  },
+  "form": {
+    "description": "Project Description",
+    "scope": "Scope",
+    "timeline": "Timeline",
+    "budget": "Budget (optional)",
+    "requirements": "Requirements",
+    "timelinePlaceholder": "e.g. 3 months, 12 weeks",
+    "budgetPlaceholder": "e.g. Under ₩50M",
+    "submit": "✨ Generate AI Quote",
+    "submitting": "GPT-4o generating quote...",
+    "autoExtracted": "Information auto-extracted from image. Please review and edit if needed.",
+    "placeholders": {
+      "Interior Architecture": {
+        "description": "e.g. Cafe interior remodeling in Gangnam-gu",
+        "scope": "e.g. Full 80㎡ renovation (flooring, walls, ceiling, lighting, furniture)",
+        "requirements": "e.g. Modern minimal style, eco-friendly materials, minimize business disruption"
+      },
+      "IT": {
+        "description": "e.g. Reservation management web platform for small businesses",
+        "scope": "e.g. Frontend (React), Backend (Node.js), DB, admin dashboard",
+        "requirements": "e.g. Mobile responsive, payment integration, push notifications"
+      },
+      "Consulting": {
+        "description": "e.g. Series A fundraising strategy consulting for startup",
+        "scope": "e.g. Business model analysis, market research, IR deck preparation",
+        "requirements": "e.g. Target fundraising within 3 months, weekly meetings"
+      },
+      "Translation": {
+        "description": "e.g. SaaS product UI/UX and marketing materials EN→KO translation",
+        "scope": "e.g. ~5,000 words of web app UI text, landing page, email templates",
+        "requirements": "e.g. Consistent IT terminology, localization-level translation, glossary provided"
+      }
+    }
+  },
+  "image": {
+    "analyzing": "🔍 GPT-4o Vision is analyzing the image...",
+    "analyzingDesc": "Automatically extracting project information",
+    "done": "✅ Analysis complete",
+    "remove": "× Remove image",
+    "dropzone": "Drag & drop or click to upload",
+    "formats": "JPG · PNG · WebP · GIF / Max 5MB",
+    "paste": "Ctrl+V paste also supported",
+    "hint": "📋 Upload a project document, whiteboard, or planning sheet to auto-extract information",
+    "errorType": "Only image files can be uploaded.",
+    "errorSize": "File size must be 5MB or less."
+  },
+  "result": {
+    "totalPrice": "Total Quote",
+    "rankOverall": "Overall #{{rank}}",
+    "rankCategory": "Category #{{rank}}",
+    "detail": "📄 Quote Details",
+    "item": "Item",
+    "price": "Price",
+    "total": "Total",
+    "risks": "⚡ Risk Factors",
+    "feedback": "📝 Evaluation Feedback",
+    "strengths": "✅ Strengths",
+    "weaknesses": "⚠️ Weaknesses",
+    "suggestions": "💡 Suggestions",
+    "reset": "🔄 New Quote",
+    "viewRanking": "🏆 View Ranking",
+    "scoreLabel": "/ 100",
+    "excellent": "Excellent",
+    "good": "Good",
+    "fair": "Fair",
+    "poor": "Poor"
+  },
+  "ranking": {
+    "title": "🏆 Quote Ranking",
+    "subtitle": "Sorted by AI quote quality score",
+    "refresh": "🔄 Refresh",
+    "all": "All",
+    "colRank": "Rank",
+    "colCategory": "Category",
+    "colSummary": "Summary",
+    "colPrice": "Total Price",
+    "colTimeline": "Timeline",
+    "colScore": "Score",
+    "colDate": "Date",
+    "loading": "Loading ranking...",
+    "empty": "No quotes saved yet.\nGenerate a quote to appear in the ranking.",
+    "total": "{{count}} quotes total"
+  },
+  "footer": {
+    "address": "B1F, 32 Eunseong-ro, Sosa-bon-dong, Bucheon, Gyeonggi-do",
+    "phone": "Tel: 032-351-9117",
+    "email": "Email: kz4network@gmail.com",
+    "aiNoticeTitle": "AI Service Notice",
+    "aiNoticeText": "This service discloses that quotes are AI-generated pursuant to the AI Basic Act. AI results are for reference only and may differ from actual contract amounts. Please consult a professional for important decisions.",
+    "service": "Service",
+    "policy": "Policies",
+    "ourSites": "Our Sites",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "aiNoticeLink": "AI Service Notice",
+    "copyright": "© 2023 KZ Network Co., Ltd. All rights reserved.",
+    "powered": "Powered by GPT-4o · AI results are for reference only"
+  },
+  "about": {
+    "title": "🏢 About Us",
+    "subtitle": "KZ Network Co., Ltd. empowers business decisions with AI technology.",
+    "overviewTitle": "📌 Company Overview",
+    "fields": {
+      "name": "Company",
+      "nameVal": "KZ Network Co., Ltd.",
+      "ceo": "CEO",
+      "ceoVal": "CEO",
+      "address": "Address",
+      "addressVal": "B1F, 32 Eunseong-ro, Sosa-bon-dong, Bucheon, Gyeonggi-do",
+      "phone": "Phone",
+      "phoneVal": "032-351-9117",
+      "email": "Email",
+      "emailVal": "kz4network@gmail.com",
+      "service": "Service",
+      "serviceVal": "AI Quote Generation, IT Solutions"
+    },
+    "serviceTitle": "🤖 What is the AI Quote Generator?",
+    "serviceDesc1": "KZ Network's AI Quote Generator uses OpenAI GPT-4o to automatically generate project quotes for interior design, IT development, management consulting, and translation.",
+    "serviceDesc2": "Traditionally, getting a quote required contacting multiple vendors and waiting days. Our service delivers detailed quotes with quality feedback based on Korean market rates within seconds — just enter your project details or upload a planning document.",
+    "features": {
+      "instant": "⚡ Instant",
+      "instantDesc": "Quote ready in seconds",
+      "market": "🎯 Korean Market Rates",
+      "marketDesc": "Based on actual local pricing",
+      "score": "📊 Quality Score",
+      "scoreDesc": "Project completeness evaluation",
+      "vision": "🖼️ Image Recognition",
+      "visionDesc": "Auto-extract from document photos"
+    },
+    "categoryTitle": "📂 Supported Categories",
+    "aiLawTitle": "📜 AI Basic Act Compliance",
+    "aiLawDesc": "This service complies with the AI Basic Act (Act No. 20692) by disclosing that all content is AI-generated. All quote results are automatically generated for reference only and do not constitute legally binding contracts. For inquiries or objections regarding AI-generated results, contact kz4network@gmail.com."
+  },
+  "guide": {
+    "title": "📚 Project Pricing Guide",
+    "subtitle": "Learn about pricing standards and cost-saving tips for interior, IT, consulting, and translation projects.",
+    "readMore": "Read more →",
+    "back": "← Back to list",
+    "aiCta": "✨ Get an accurate AI quote",
+    "aiCtaDesc": "Use this guide as a reference and enter your project details — GPT-4o will instantly generate a tailored quote based on Korean market rates. Image upload also supported.",
+    "noGuideTitle": "🤔 Still unsure after reading the guide?",
+    "noGuideDesc": "Enter your project details or upload a planning document and GPT-4o will instantly provide a detailed, itemized quote with quality feedback based on Korean market rates. Free to use.",
+    "faqTitle": "❓ Frequently Asked Questions"
+  }
+}

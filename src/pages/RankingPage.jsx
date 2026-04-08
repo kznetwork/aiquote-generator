@@ -1,28 +1,29 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import RankingTable from '../components/RankingTable'
 import AdBanner from '../components/AdBanner'
 
-const TABS = [
-  { id: '', label: '전체' },
-  { id: 'Interior Architecture', label: '🏗️ 인테리어' },
-  { id: 'IT', label: '💻 IT' },
-  { id: 'Consulting', label: '📊 컨설팅' },
-  { id: 'Translation', label: '🌐 번역' },
-]
-
 export default function RankingPage() {
+  const { t } = useTranslation()
   const [tab, setTab] = useState('')
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  const TABS = [
+    { id: '', label: t('ranking.all') },
+    { id: 'Interior Architecture', label: '🏗️ ' + t('category.Interior Architecture.label') },
+    { id: 'IT', label: '💻 ' + t('category.IT.label') },
+    { id: 'Consulting', label: '📊 ' + t('category.Consulting.label') },
+    { id: 'Translation', label: '🌐 ' + t('category.Translation.label') },
+  ]
+
   const fetchRanking = useCallback(async () => {
-    setLoading(true)
-    setError('')
+    setLoading(true); setError('')
     try {
       const url = tab ? `/api/ranking?category=${encodeURIComponent(tab)}` : '/api/ranking'
       const res = await fetch(url)
-      if (!res.ok) throw new Error('랭킹을 불러오는데 실패했습니다.')
+      if (!res.ok) throw new Error('Failed to load ranking.')
       setData(await res.json())
     } catch (e) {
       setError(e.message)
@@ -37,26 +38,19 @@ export default function RankingPage() {
     <div>
       <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: 4 }}>🏆 견적 랭킹</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>
-            AI 견적 품질 점수 기준 정렬 (동점 시 생성 순)
-          </p>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: 4 }}>{t('ranking.title')}</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>{t('ranking.subtitle')}</p>
         </div>
-        <button className="btn btn-ghost" onClick={fetchRanking} title="새로 고침">
-          🔄 새로 고침
-        </button>
+        <button className="btn btn-ghost" onClick={fetchRanking} title={t('ranking.refresh')}>{t('ranking.refresh')}</button>
       </div>
 
-      {/* Tab bar */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' }}>
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            className={`btn${tab === t.id ? ' btn-primary' : ' btn-ghost'}`}
+        {TABS.map(tb => (
+          <button key={tb.id}
+            className={`btn${tab === tb.id ? ' btn-primary' : ' btn-ghost'}`}
             style={{ padding: '7px 14px', fontSize: '.85rem' }}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
+            onClick={() => setTab(tb.id)}>
+            {tb.label}
           </button>
         ))}
       </div>
@@ -67,16 +61,11 @@ export default function RankingPage() {
 
       {!loading && !error && data.length > 0 && (
         <p style={{ color: 'var(--text-muted)', fontSize: '.8rem', textAlign: 'center', marginTop: 14 }}>
-          총 {data.length}개 견적
+          {t('ranking.total', { count: data.length })}
         </p>
       )}
 
-      {/* Ad — 랭킹 하단 */}
-      <AdBanner
-        slot="0987654321"
-        format="auto"
-        style={{ marginTop: 20 }}
-      />
+      <AdBanner slot="0987654321" format="auto" style={{ marginTop: 20 }} />
     </div>
   )
 }
