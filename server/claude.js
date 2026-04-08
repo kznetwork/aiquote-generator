@@ -1,6 +1,32 @@
-import Anthropic from '@anthropic-ai/sdk';
+/**
+ * OpenRouter API를 사용한 견적 생성 서비스
+ *
+ * OpenRouter는 OpenAI 호환 API 형식을 사용합니다.
+ * 사용 가능한 모델: https://openrouter.ai/models
+ *
+ * 환경변수 (.env):
+ *   OPENROUTER_API_KEY  — OpenRouter API 키 (필수)
+ *   OPENROUTER_MODEL    — 사용할 모델 (선택, 기본값 아래 참고)
+ */
+import OpenAI from 'openai';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+// OPENROUTER_API_KEY가 없으면 서버 시작 시 즉시 경고
+if (!process.env.OPENROUTER_API_KEY) {
+  console.error('❌ OPENROUTER_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요.');
+}
+
+const client = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+  defaultHeaders: {
+    'HTTP-Referer': 'http://localhost:5173',  // 배포 시 실제 도메인으로 변경
+    'X-Title': 'AI Quote Generator',
+  },
+});
+
+// 기본 모델: anthropic/claude-sonnet-4-5 (성능/비용 균형)
+// 변경하려면 .env에 OPENROUTER_MODEL=원하는모델명 추가
+const MODEL = process.env.OPENROUTER_MODEL || 'anthropic/claude-sonnet-4-5';
 
 const CATEGORY_CONTEXT = {
   'Interior Architecture': '인테리어 건축 (Interior & Architecture). Prices should be in Korean Won (₩). Include items like design, materials, construction, labor, supervision.',
@@ -54,21 +80,21 @@ Score calculation (be strict and realistic):
 
 Make the breakdown items sum to total_price. Be specific and professional.`;
 
-  const response = await client.messages.create({
-    model: 'claude-opus-4-6',
+  const response = await client.chat.completions.create({
+    model: MODEL,
     max_tokens: 4096,
-    thinking: { type: 'adaptive' },
-    system: systemPrompt,
-    messages: [{ role: 'user', content: userPrompt }],
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user',   content: userPrompt   },
+    ],
   });
 
-  const textBlock = response.content.find(b => b.type === 'text');
-  if (!textBlock) throw new Error('No text response from Claude');
+  const text = response.choices?.[0]?.message?.content?.trim();
+  if (!text) throw new Error('AI로부터 응답이 없습니다.');
 
-  // Extract JSON (handle potential markdown wrapping)
-  const text = textBlock.text.trim();
+  // JSON 추출 (마크다운 코드 블록 처리)
   const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error('No JSON found in Claude response');
+  if (!jsonMatch) throw new Error('AI 응답에서 JSON을 찾을 수 없습니다.');
 
   return JSON.parse(jsonMatch[0]);
 }
