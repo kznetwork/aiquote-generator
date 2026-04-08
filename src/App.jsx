@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GeneratePage from './pages/GeneratePage'
 import RankingPage from './pages/RankingPage'
+import Footer from './components/Footer'
 import './App.css'
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
           <RankingPage />
         )}
       </main>
+      <Footer />
     </div>
   )
 }
